@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>WebScript</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
+</head>
+
+<style>
+  section {
+      padding: 1rem;
+      border: solid #999999 thin;
+      border-left: solid #999999 1rem;
+  }
+
+  .done {
+      border-color: #990099;
+  }
+
+  canvas {
+    border: 1px dashed green;
+    display: inline-block;
+    margin: 1em;
+    vertical-align: middle;
+  }
+
+  img {
+    border: 1px dashed green;
+    display: inline-block;
+    margin: 1em;
+    vertical-align: middle;
+  }
+
+</style>
+
+<body>
+    <div id="qunit">
+    </div>
+
+
+    <section>
+      <h1>Parallel lines</h1>
+      <canvas id="canvas4" width="510" height="216"></canvas>
+      <p>It should look like this:</p>
+      <img src="i/lines.png" alt="Parallel lines with one line twice as long as the other.">
+    </section>
+
+    <section>
+      <h1>I'm a triangle!</h1>
+      <p class="nobreak">
+        <canvas id="canvas2" width="200" height="200"></canvas>
+        <p>It should look like this:</p>
+        <img src="i/triangles.png" alt="An image with 3 isosceles triangles. All triangles are green with a red border.  Two triangles point to the top left corner, the second of which is slightly smaller, offset towards the centre of the image and partially overlapping the first.  The last triangle points to the bottom right corner.">
+      </p>
+    </section>
+
+    <section>
+      <h1>Draw a grid</h1>
+      <canvas id="canvas5" width="500" height="200"></canvas>
+    </section>
+
+    <section>
+      <h1>Draw the flag of the Czech Republic</h1>
+      <canvas id="canvas6" width="400" height="270"></canvas>
+      <p>It should look like this:</p>
+      <img src="i/czech.png" alt="This the the Czech Republic flag.  Comprising two horizontal rectangles in red and white filling the flag.  At the left edge of the flag is a blue triangle which is not quite equilateral.">
+    </section>
+
+    <section>
+      <h1>I'm Spartacus!</h1>
+      <canvas id="canvas" width="200" height="200"></canvas>
+    </section>
+
+    <section>
+      <h1>The server said:</h1>
+      <pre id=message></pre>
+    </section>
+
+    <section>
+      <h1>Fill lists with data from a server.</h1>
+      <ol id=list1></ol>
+      <ul id=list2></ul>
+    </section>
+
+    <section>
+      <h1>The server now says:</h1>
+      <pre id=message2></pre>
+    </section>
+
+    <section>
+      <h1>XHR Error</h1>
+      <pre id=message3></pre>
+      <pre id=message4></pre>
+    </section>
+
+    <section>
+      <h1>Draw Box from Server Coordinates </h1>
+      <canvas id="canvas3" width="200" height="200"></canvas>
+    </section>
+
+    <script>
+      window.topic = "ws_canvas";
+    </script>
+    <script src="http://code.jquery.com/qunit/qunit-2.0.1.js"></script>
+    <script src="index.js"></script>
+    <script src="logger.js"></script>
+    <script src="assess.canvas.js"></script>
+</body>
+
+</html>
