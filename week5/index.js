@@ -21,16 +21,34 @@ function id() {
  * It should be 400 pixels long. The second line should run parallel to the first line, exactly 100 pixels below it.
  * It should start at a point 100 pixels from the edge of the canvas and be 200 pixels long.
  */
-function drawLines(){
-
+function drawLines(canvas){
+    var canvas = canvas.getContext("2d");
+    canvas.beginPath();
+    canvas.moveTo(100, 100);
+    canvas.lineTo(500, 100);
+    canvas.stroke();
+    
+    canvas.beginPath();
+    canvas.moveTo(100, 200);
+    canvas.lineTo(300, 200);
+    canvas.stroke();
 }
 
 /*
- * Canvas: Create a function `drawTriangle` that takes seven parameters: a canvas element, and x1, y1, x2, y2, x3, y3.
+ * Create a function `drawTriangle` that takes seven parameters: a canvas element, and x1, y1, x2, y2, x3, y3.
  * The function draws a red triangle, filled solid with green, between the three points given by the parameters.
  */
-function drawTriangle(){
-
+function drawTriangle(canvas, x1, y1, x2, y2, x3, y3){
+    var canvas = canvas.getContext("2d");
+    canvas.beginPath();
+    canvas.fillStyle = "#00ff00";
+    canvas.strokeStyle = "red";
+    canvas.moveTo(x1, y1);
+    canvas.lineTo(x2, y2);
+    canvas.lineTo(x3, y3);
+    canvas.lineTo(x1, y1);
+    canvas.fill();
+    canvas.stroke();
 }
 
 /*
@@ -39,13 +57,73 @@ function drawTriangle(){
  * For convenience, index.js contains a function `drawStickFigure` that does most of the job, given a canvas element.
  * Challenge: make him walk around.
  */
-function drawSpartacus(){
+function drawSpartacus(canvas){
+
+}
+
+/*
+ *  Write a drawGrid function that fills the canvas with a grid to make squares 50px big.
+ */
+function drawGrid(canvas){
+    var c = document.getElementById(canvas);
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(95,50,40,0,2*Math.PI);
+    ctx.stroke();
+    Try it Yourself »
 
 }
 
 /*
  * Write a drawCzechFlag function to draw the Czech flag.
  */
+function drawCzechFlag(pCanvas){
+    var canvas = pCanvas.getContext("2d");
+    
+    // Draw Red Section
+    canvas.beginPath();
+    canvas.fillStyle = "red";
+    canvas.strokeStyle = "red";
+    canvas.moveTo(canvas.height / 2, 0);
+    canvas.lineTo(canvas.height / 2, canvas.width);
+    canvas.lineTo(canvas.height, canvas.width);
+    canvas.lineTo(canvas.height / 2, 0);
+    canvas.fill();
+    canvas.stroke();
+    
+    // Draw Blue Section
+    
+}
+
+/*
+ *  Create a function `showMessage` that takes two parameters: an element and a string that is a URL. 
+ *  The function will retrieve the URL with a synchronous request and put the response text into the text content of the provided element.
+ */
+function showMessage(elementID, URL){
+    var xhr = new XMLHttpRequest();
+	xhr.open("GET", URL, false);
+	xhr.send();
+    
+    document.getElementById(elementID).textContent = xhr.responseText;
+}
+
+/*
+ *  Create a function `showList` that takes two parameters: an element and a string that is a URL. 
+ *  The function will retrieve the URL with a synchronous request, parse the retrieved data as JSON;  
+ *  the data is guaranteed to be an array of string. The function will then, like the `filler` 
+ *  function in `ws_dom`, put the contents of the array as list items into the provided element.
+ */
+function showList(elementID, URL){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", URL, false);
+    xhr.send();
+    
+    for(var i = 0; i < xhr.responseText.length; i++){
+        var li = document.createElement("li");
+        li.textContent = xhr.responseText[i];
+        elementID.appendChild(li);
+    }
+}
 
 // draws a stick figure on the canvas
 // the stick figure will stand over the point X,Y (default: 100,150)
