@@ -2,7 +2,7 @@
   "name": "uup772629",
   "version": "1.0.0",
   "description": "utility folder",
-  "main": "index.js",
+  "main": "utility.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
