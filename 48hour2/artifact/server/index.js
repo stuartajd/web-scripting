@@ -6,12 +6,11 @@ var utility = require("../utility");
 
 var stories = [];
 
+// Push the initial server files
 stories.push({"id": 1, "author": "Luke Skywalker", "title": "Hello world!", "text": "So I decided to join jsbook like everyone else. What does one post here?" });
 
-app.use('/', express.static('webpages', { extensions: ['html'] }));
-
-/**
- * Routes
+/*
+    EXPRESS WEB ROUTES
  */
 app.get('/api/stories', getStories);
 app.post('/api/stories', postStories);
@@ -19,16 +18,24 @@ app.delete('/api/stories', deleteStories);
 app.get('/api/stories/newest', newestStories);
 app.get('/api/stories/oldest', oldestStories);
 
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!')
-})
+// Serve the static HTML pages
+app.use('/', express.static('webpages', { extensions: ['html'] }));
 
+// Run the server on port 8080
+app.listen(8080);
+
+/*
+    SERVER FUNCTIONS
+ */
 
 /**
- * Server Functions
+ * getStories() function returns either the full story list,
+ *  or returns the list from a specific number to paginate the system.
  */
 function getStories(req, res) {
-    stories.sort(function (a, b) {
+    var listStories = stories.slice();
+
+    listStories.sort(function (a, b) {
         return b.id - a.id;
     });
 
@@ -36,20 +43,23 @@ function getStories(req, res) {
         var limited = [];
         var limit = req.query.p * 10;
         for (var i = limit - 10; i < limit; i++) {
-            if (stories[i]) {
-                limited.push(stories[i]);
+            if (listStories[i]) {
+                limited.push(listStories[i]);
             } else break;
         }
         res.send(JSON.stringify(limited));
     } else {
-        res.send(JSON.stringify(stories));
+        res.send(JSON.stringify(listStories));
     }
 }
 
+/**
+ * postStories() function to add the requested story to the system,
+ *  assigning an ID to the JSON before returning the added story.
+ */
 function postStories(req, res) {
-    // NEED TO FIND A NEW WAY TO DO THE ID'S!!!!!!
     var story = {
-        "id": stories[stories.length - 1].id + stories.length,
+        "id": stories.length + 1,
         "author": req.query.author,
         "title": req.query.title,
         "text": req.query.text
@@ -58,6 +68,10 @@ function postStories(req, res) {
     res.send(JSON.stringify(story));
 }
 
+/**
+ * deleteStories() checks to see if the specific story exists, if it does it will call the removeFromArray function
+ *  otherwise it will return a 404 error.
+ */
 function deleteStories(req, res){
     var index = null;
     for(var i in stories){
@@ -73,13 +87,18 @@ function deleteStories(req, res){
         stories = utility.removeFromArray(stories, index);
         res.sendStatus(200);
     }
-
 }
 
+/**
+ * newestStories() returns the latest story within the stories array.
+ */
 function newestStories(req, res){
     res.send(JSON.stringify(stories[stories.length-1]));
 }
 
+/**
+ * oldestStories() returns the oldest story within the stories array.
+ */
 function oldestStories (req, res){
     res.send(JSON.stringify(stories[0]));
 }
